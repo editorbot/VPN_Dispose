@@ -61,4 +61,27 @@ ad.show();
           ))
      ..load();
  }
+
+ static void  showRewardedAd({required VoidCallback onComplete}) {
+   MyDialogs.showProgress();
+   RewardedAd.load(
+     adUnitId: "ca-app-pub-3940256099942544/1033173712",
+     request: AdRequest(),
+     rewardedAdLoadCallback: RewardedAdLoadCallback(
+       onAdLoaded: (ad) {
+
+         Get.back();
+         ad.show(onUserEarnedReward:
+             (AdWithoutView ad, RewardItem rewardItem) {
+           onComplete();
+         },);
+       },
+       onAdFailedToLoad: (err) {
+         Get.back();
+         log('Failed to load an rewarded ad: ${err.message}');
+         
+       },
+     ),
+   );
+ }
 }
