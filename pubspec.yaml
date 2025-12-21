@@ -45,6 +45,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   google_mobile_ads: ^6.0.0
+  firebase_core: ^4.3.0
 
 dev_dependencies:
   flutter_test:
