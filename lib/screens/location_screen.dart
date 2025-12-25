@@ -10,32 +10,46 @@ import '../main.dart';
 import '../widgets/vpn_card.dart';
 
 
-class LocationScreen extends StatelessWidget {
+class LocationScreen extends StatefulWidget {
    LocationScreen({super.key});
+
+  @override
+  State<LocationScreen> createState() => _LocationScreenState();
+}
+
+class _LocationScreenState extends State<LocationScreen> {
    final _controller=LocationController();
+
    final _adController=NativeAdController();
+
   // final _controller=LocationController();
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(_controller.vpnList.isEmpty) _controller.getVpnData();
+    _adController.ad= AdHelper.loadNativeAd(adController: _adController);
+  }
+   @override
+   void dispose() {
+     // DISPOSE AD HERE TO PREVENT MEMORY LEAKS
+     _adController.ad?.dispose();
+     super.dispose();
+   }
   @override
   Widget build(BuildContext context) {
 
 
-   if(_controller.vpnList.isEmpty) _controller.getVpnData();
-   
-  _adController.ad= AdHelper.loadNativeAd(adController: _adController);
-   
     return Scaffold(
       appBar: AppBar(title: Text('VPN Locations (${_controller.vpnList.length})'),backgroundColor: Colors.blue,),
 bottomNavigationBar:
 _adController.ad!=null && _adController.adLoaded.isTrue ?
 // SizedBox(height: 200,child: AdWidget(ad: _adController.ad!),):null,
 // Small template
-      ConstrainedBox(
-    constraints: const BoxConstraints(
-    minWidth: 320, // minimum recommended width
-      minHeight: 90, // minimum recommended height
-      maxWidth: 400,
-      maxHeight: 200,
-    ),
+      Container(
+    width: double.infinity,
+    height: 100,
     child: AdWidget(ad: _adController.ad!),
     ):null,
 floatingActionButton: FloatingActionButton(onPressed: (){ _controller.getVpnData();},child: Icon(Icons.refresh),),
