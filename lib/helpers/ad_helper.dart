@@ -56,7 +56,7 @@ ad.show();
        // Styling
        nativeTemplateStyle: NativeTemplateStyle(
          // Required: Choose a template.
-           templateType: TemplateType.medium,
+           templateType: TemplateType.small,
 
           ))
      ..load();

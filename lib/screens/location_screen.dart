@@ -47,11 +47,10 @@ bottomNavigationBar:
 _adController.ad!=null && _adController.adLoaded.isTrue ?
 // SizedBox(height: 200,child: AdWidget(ad: _adController.ad!),):null,
 // Small template
-      Container(
-    width: double.infinity,
-    height: 100,
-    child: AdWidget(ad: _adController.ad!),
-    ):null,
+SafeArea(
+  child: SizedBox(
+      height: 85, child: AdWidget(ad: _adController.ad!)),
+):null,
 floatingActionButton: FloatingActionButton(onPressed: (){ _controller.getVpnData();},child: Icon(Icons.refresh),),
 body: Obx(()=>_controller.isloading.value?_loadingWidget():_controller.vpnList.isEmpty ?_noVPNfound():vpnData())
     );
