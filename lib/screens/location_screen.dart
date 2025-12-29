@@ -10,49 +10,33 @@ import '../main.dart';
 import '../widgets/vpn_card.dart';
 
 
-class LocationScreen extends StatefulWidget {
+class LocationScreen extends StatelessWidget {
    LocationScreen({super.key});
 
-  @override
-  State<LocationScreen> createState() => _LocationScreenState();
-}
-
-class _LocationScreenState extends State<LocationScreen> {
    final _controller=LocationController();
 
    final _adController=NativeAdController();
 
   // final _controller=LocationController();
-
-   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    if(_controller.vpnList.isEmpty) _controller.getVpnData();
-    _adController.ad= AdHelper.loadNativeAd(adController: _adController);
-  }
-   @override
-   void dispose() {
-     // DISPOSE AD HERE TO PREVENT MEMORY LEAKS
-     _adController.ad?.dispose();
-     super.dispose();
-   }
   @override
   Widget build(BuildContext context) {
+    if(_controller.vpnList.isEmpty) _controller.getVpnData();
+    _adController.ad= AdHelper.loadNativeAd(adController: _adController);
 
-
-    return Scaffold(
-      appBar: AppBar(title: Text('VPN Locations (${_controller.vpnList.length})'),backgroundColor: Colors.blue,),
-bottomNavigationBar:
-_adController.ad!=null && _adController.adLoaded.isTrue ?
+    return Obx(()=>
+        Scaffold(
+            appBar: AppBar(title: Text('VPN Locations (${_controller.vpnList.length})'),backgroundColor: Colors.blue,),
+            bottomNavigationBar:
+            _adController.ad!=null && _adController.adLoaded.isTrue ?
 // SizedBox(height: 200,child: AdWidget(ad: _adController.ad!),):null,
 // Small template
-SafeArea(
-  child: SizedBox(
-      height: 85, child: AdWidget(ad: _adController.ad!)),
-):null,
-floatingActionButton: FloatingActionButton(onPressed: (){ _controller.getVpnData();},child: Icon(Icons.refresh),),
-body: Obx(()=>_controller.isloading.value?_loadingWidget():_controller.vpnList.isEmpty ?_noVPNfound():vpnData())
+            SafeArea(
+              child: SizedBox(
+                  height: 85, child: AdWidget(ad: _adController.ad!)),
+            ):null,
+            floatingActionButton: FloatingActionButton(onPressed: (){ _controller.getVpnData();},child: Icon(Icons.refresh),),
+            body: Obx(()=>_controller.isloading.value?_loadingWidget():_controller.vpnList.isEmpty ?_noVPNfound():vpnData())
+        )
     );
   }
 

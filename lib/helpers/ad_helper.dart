@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:vpn_serve/controller/native_ad_controller.dart';
 import 'package:vpn_serve/helpers/my_dialogs.dart';
+
+import 'config.dart';
 class AdHelper {
  static Future<void> initAds() async {
     // TODO: Initialize Google Mobile Ads SDK
@@ -12,6 +14,10 @@ class AdHelper {
   }
  // TODO: Implement _loadInterstitialAd()
 static void  showInterstitialAd({required VoidCallback onComplete}) {
+   if(Config.hideads){
+     onComplete;
+     return;
+   }
    MyDialogs.showProgress();
    InterstitialAd.load(
      adUnitId: "ca-app-pub-3940256099942544/1033173712",
@@ -37,7 +43,11 @@ ad.show();
  }
  /// Loads a native ad.
  /// ca-app-pub-3940256099942544/2247696110
- static NativeAd loadNativeAd({required NativeAdController adController}) {
+ static NativeAd? loadNativeAd({required NativeAdController adController}) {
+   if(Config.hideads){
+
+     return null;
+   }
    return NativeAd(
      // factoryId: "yourFactoryId",
        adUnitId: "/21775744923/example/native",

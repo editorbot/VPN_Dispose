@@ -24,8 +24,10 @@ log("updated: ${_config.getAll()}");
       // Use the new config values here.
     });
   }
-  static bool get showAd=>_config.getBool("shows_ads");
+  static bool get _showAd=>_config.getBool("shows_ads");
   static String get nativeId=>_config.getString("native_ad");
   static String get rewardId=>_config.getString("rewarded_ad");
   static String get interstitialId=>_config.getString("interstitial_ad");
+
+  static bool get hideads=>!_showAd;
 }
