@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:vpn_serve/helpers/ad_helper.dart';
 
 
 import '../main.dart';
@@ -18,7 +21,13 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(milliseconds: 1500),(){
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomeScreen()));
+      //exit full screen
+      // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      AdHelper.precacheInterstitialAd();
+      AdHelper.precacheNativeAd();
+      //navigate to home
+Get.off(()=>HomeScreen());
+    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomeScreen()));
     });
   }
   @override
