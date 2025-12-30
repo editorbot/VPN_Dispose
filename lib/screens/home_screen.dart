@@ -30,7 +30,7 @@ final _controller=Get.put(HomeController());
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
       appBar: AppBar(title: Text('OpenVPN Demo'),backgroundColor: Colors.blue,),
-      bottomNavigationBar: _changeLocation(),
+      bottomNavigationBar: SafeArea(child: _changeLocation()),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
