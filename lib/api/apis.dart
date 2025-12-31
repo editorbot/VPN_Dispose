@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:csv/csv.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:vpn_serve/helpers/my_dialogs.dart';
 import 'package:vpn_serve/helpers/pref.dart';
 
 import '../models/vpn.dart';
@@ -27,6 +29,7 @@ class APIs{
       }
         log(vpnList.first.hostname);
     }  catch (e) {
+      MyDialogs.error(msg: e.toString());
       // TODO
       log("GetVPNServersE:$e");
     }
@@ -34,5 +37,17 @@ class APIs{
     if(vpnList.isNotEmpty) Pref.vpnList=vpnList;
 
     return vpnList;
+  }
+  static Future<void> getIPDetails({required Rx<IPDetails>} ipData) async{
+    final List<Vpn> vpnList=[];
+    try {
+      final res=await get(Uri.parse('http://www.vpngate.net/api/iphone/'));
+     final data=jsonDecode(res.body);
+      log(vpnList.first.hostname);
+    }  catch (e) {
+      // TODO
+      log("GetVPNServersE:$e");
+    }
+
   }
 }
