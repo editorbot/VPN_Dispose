@@ -7,6 +7,7 @@ import 'package:http/http.dart';
 import 'package:vpn_serve/helpers/my_dialogs.dart';
 import 'package:vpn_serve/helpers/pref.dart';
 
+import '../models/ip_details.dart';
 import '../models/vpn.dart';
 
 class APIs{
@@ -38,15 +39,16 @@ class APIs{
 
     return vpnList;
   }
-  static Future<void> getIPDetails({required Rx<IPDetails>} ipData) async{
+  static Future<void> getIPDetails({required Rx<IpDetails> ipData} ) async{
     final List<Vpn> vpnList=[];
     try {
       final res=await get(Uri.parse('http://www.vpngate.net/api/iphone/'));
      final data=jsonDecode(res.body);
-      log(vpnList.first.hostname);
+     ipData.value=IpDetails.fromJson(data);
+      log(data.toString());
     }  catch (e) {
       // TODO
-      log("GetVPNServersE:$e");
+      log("\ngetIPDetailsE:$e");
     }
 
   }
